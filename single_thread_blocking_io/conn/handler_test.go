@@ -3,8 +3,8 @@ package conn
 import (
 	"bytes"
 	"github.com/stretchr/testify/assert"
-	"single_threaded_blocking_io/proto"
-	store2 "single_threaded_blocking_io/store"
+	"single_thread_blocking_io/proto"
+	store2 "single_thread_blocking_io/store"
 	"testing"
 )
 

@@ -1,7 +1,8 @@
 go 1.22.3
 
 use (
-	single_threaded_blocking_io
-	multi_threaded_blocking_io
+	./single_thread_blocking_io
+	./multi_thread_blocking_io
 	non_blocking_busy_waiting
+	./single_thread_event_loop
 )

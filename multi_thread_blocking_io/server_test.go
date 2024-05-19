@@ -2,8 +2,8 @@ package single_threaded_blocking_io
 
 import (
 	"github.com/stretchr/testify/assert"
-	"multi_threaded_blocking_io/conn"
-	"multi_threaded_blocking_io/proto"
+	"multi_thread_blocking_io/conn"
+	"multi_thread_blocking_io/proto"
 	"net"
 	"testing"
 )

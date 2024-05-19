@@ -1,10 +1,10 @@
-package single_threaded_blocking_io
+package single_thread_blocking_io
 
 import (
 	"github.com/stretchr/testify/assert"
 	"net"
-	"single_threaded_blocking_io/conn"
-	"single_threaded_blocking_io/proto"
+	"single_thread_blocking_io/conn"
+	"single_thread_blocking_io/proto"
 	"testing"
 )
 

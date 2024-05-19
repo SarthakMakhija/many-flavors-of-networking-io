@@ -3,9 +3,9 @@ package conn
 import (
 	"bufio"
 	"github.com/stretchr/testify/assert"
+	"multi_thread_blocking_io/proto"
+	"multi_thread_blocking_io/store"
 	"net"
-	"single_threaded_blocking_io/proto"
-	"single_threaded_blocking_io/store"
 	"sync"
 	"testing"
 	"time"

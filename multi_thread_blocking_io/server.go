@@ -3,10 +3,10 @@ package single_threaded_blocking_io
 import (
 	"fmt"
 	"log"
+	"multi_thread_blocking_io/conn"
+	"multi_thread_blocking_io/store"
 	"net"
 	_ "net/http/pprof"
-	"single_threaded_blocking_io/conn"
-	"single_threaded_blocking_io/store"
 )
 
 // TCPServer represents a TCP TCPServer
@@ -38,7 +38,7 @@ func (server *TCPServer) Start() {
 		if err != nil {
 			return
 		}
-		conn.NewIncomingTCPConnection(connection, server.store).Handle()
+		go conn.NewIncomingTCPConnection(connection, server.store).Handle()
 	}
 }
 

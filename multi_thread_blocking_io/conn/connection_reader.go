@@ -3,8 +3,8 @@ package conn
 import (
 	"bufio"
 	"errors"
+	"multi_thread_blocking_io/proto"
 	"net"
-	"single_threaded_blocking_io/proto"
 	"time"
 )
 

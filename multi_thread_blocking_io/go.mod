@@ -1,4 +1,4 @@
-module single_threaded_blocking_io
+module multi_thread_blocking_io
 
 go 1.22.3
 

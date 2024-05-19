@@ -2,8 +2,8 @@ package conn
 
 import (
 	"net"
-	"single_threaded_blocking_io/proto"
-	"single_threaded_blocking_io/store"
+	"single_thread_blocking_io/proto"
+	"single_thread_blocking_io/store"
 )
 
 // IncomingTCPConnection represents the incoming TCP connection.

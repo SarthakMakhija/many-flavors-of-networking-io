@@ -1,4 +1,4 @@
-module multi_threaded_blocking_io
+module single_thread_eventloop
 
 go 1.22.3
 

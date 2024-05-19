@@ -1,8 +1,8 @@
 package conn
 
 import (
-	"multi_threaded_blocking_io/proto"
-	"multi_threaded_blocking_io/store"
+	"multi_thread_blocking_io/proto"
+	"multi_thread_blocking_io/store"
 )
 
 // Handler handles the incoming requests.
