@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "proto/";
+
+message KeyValueMessage {
+  string key = 1;
+  string value = 2;
+  uint32 kind = 3;
+  Status status = 4;
+}
+
+enum Status {
+  Ok = 0;
+  NotOk = 1;
+}
