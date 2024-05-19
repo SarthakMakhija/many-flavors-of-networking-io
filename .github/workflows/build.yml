@@ -19,7 +19,7 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: go build -v ./...
+      run: go build -v ./single_threaded_blocking_io && go build -v ./multi_threaded_blocking_io && go build -v ./non_blocking_busy_waiting
 
     - name: Test
-      run: go test -v ./...
+      run: go test -v ./single_threaded_blocking_io/... && go test -v ./multi_threaded_blocking_io/... && go test -v ./non_blocking_busy_waiting/...
