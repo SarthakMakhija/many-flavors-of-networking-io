@@ -1,8 +1,8 @@
 package conn
 
 import (
-	proto2 "many-flavors-of-nwing-io/single_threaded_blocking_io/proto"
-	"many-flavors-of-nwing-io/single_threaded_blocking_io/store"
+	proto2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
+	"many-flavors-of-nwing-io/multi_threaded_blocking_io/store"
 	"net"
 )
 

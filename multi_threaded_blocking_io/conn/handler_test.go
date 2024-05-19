@@ -3,8 +3,8 @@ package conn
 import (
 	"bytes"
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/single_threaded_blocking_io/proto"
-	store2 "many-flavors-of-nwing-io/single_threaded_blocking_io/store"
+	"many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
+	store2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/store"
 	"testing"
 )
 

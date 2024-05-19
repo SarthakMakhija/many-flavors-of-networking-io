@@ -3,7 +3,7 @@ package conn
 import (
 	"bufio"
 	"errors"
-	proto2 "many-flavors-of-nwing-io/single_threaded_blocking_io/proto"
+	proto2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
 	"net"
 	"time"
 )

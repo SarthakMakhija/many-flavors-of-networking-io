@@ -2,8 +2,8 @@ package single_threaded_blocking_io
 
 import (
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/single_threaded_blocking_io/conn"
-	proto2 "many-flavors-of-nwing-io/single_threaded_blocking_io/proto"
+	"many-flavors-of-nwing-io/multi_threaded_blocking_io/conn"
+	proto2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
 	"net"
 	"testing"
 )
