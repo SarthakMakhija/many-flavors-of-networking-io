@@ -3,8 +3,8 @@ package single_threaded_blocking_io
 import (
 	"fmt"
 	"log"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/conn"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/store"
+	"multi_threaded_blocking_io/conn"
+	"multi_threaded_blocking_io/store"
 	"net"
 	_ "net/http/pprof"
 )

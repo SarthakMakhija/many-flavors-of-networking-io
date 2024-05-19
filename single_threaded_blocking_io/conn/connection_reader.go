@@ -3,8 +3,8 @@ package conn
 import (
 	"bufio"
 	"errors"
-	proto2 "many-flavors-of-nwing-io/single_threaded_blocking_io/proto"
 	"net"
+	"single_threaded_blocking_io/proto"
 	"time"
 )
 
@@ -28,7 +28,7 @@ func NewConnectionReader(connection net.Conn) ConnectionReader {
 }
 
 // AttemptReadOrErrorOut attempts to read from the incoming TCP connection.
-func (connectionReader ConnectionReader) AttemptReadOrErrorOut() (*proto2.KeyValueMessage, error) {
+func (connectionReader ConnectionReader) AttemptReadOrErrorOut() (*proto.KeyValueMessage, error) {
 	totalTimeoutsErrors := 0
 	for {
 		select {
@@ -37,7 +37,7 @@ func (connectionReader ConnectionReader) AttemptReadOrErrorOut() (*proto2.KeyVal
 		default:
 			_ = connectionReader.connection.SetReadDeadline(time.Now().Add(20 * time.Millisecond))
 
-			message, err := proto2.DeserializeFrom(connectionReader.bufferedReader)
+			message, err := proto.DeserializeFrom(connectionReader.bufferedReader)
 			if err != nil {
 				if errors.As(err, &connectionReader.netError) && connectionReader.netError.Timeout() {
 					totalTimeoutsErrors += 1

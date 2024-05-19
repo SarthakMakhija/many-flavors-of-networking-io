@@ -1,0 +1,7 @@
+go 1.22.3
+
+use (
+	single_threaded_blocking_io
+	multi_threaded_blocking_io
+	non_blocking_busy_waiting
+)

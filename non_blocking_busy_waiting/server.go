@@ -3,10 +3,10 @@ package non_blocking_busy_waiting
 import (
 	"errors"
 	"log"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/conn"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/proto"
-	store2 "many-flavors-of-nwing-io/non_blocking_busy_waiting/store"
 	"net"
+	"non_blocking_busy_waiting/conn"
+	"non_blocking_busy_waiting/proto"
+	store2 "non_blocking_busy_waiting/store"
 	"syscall"
 )
 

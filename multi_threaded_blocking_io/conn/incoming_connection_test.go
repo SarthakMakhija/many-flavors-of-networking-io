@@ -3,8 +3,8 @@ package conn
 import (
 	"bufio"
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/store"
+	"multi_threaded_blocking_io/proto"
+	"multi_threaded_blocking_io/store"
 	"net"
 	"sync"
 	"testing"

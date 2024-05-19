@@ -2,8 +2,8 @@ package single_threaded_blocking_io
 
 import (
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/conn"
-	proto2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
+	"multi_threaded_blocking_io/conn"
+	"multi_threaded_blocking_io/proto"
 	"net"
 	"testing"
 )
@@ -23,10 +23,10 @@ func TestSendsAPutOrUpdateAndGetOverAConnection(t *testing.T) {
 	connection, err := net.Dial("tcp", "localhost:9090")
 	assert.Nil(t, err)
 
-	buffer, _ := proto2.NewPutOrUpdateKeyValueMessage("DiskType", "NVMe SSD").Serialize()
+	buffer, _ := proto.NewPutOrUpdateKeyValueMessage("DiskType", "NVMe SSD").Serialize()
 	_, _ = connection.Write(buffer)
 
-	buffer, _ = proto2.NewGetValueMessage("DiskType").Serialize()
+	buffer, _ = proto.NewGetValueMessage("DiskType").Serialize()
 	_, _ = connection.Write(buffer)
 
 	connectionReader := conn.NewConnectionReader(connection)
@@ -54,19 +54,19 @@ func TestSendsMultiplePutOrUpdateAndAGetOverAConnection(t *testing.T) {
 	assert.Nil(t, err)
 
 	sendMultiplePutOrUpdates := func() {
-		buffer, _ := proto2.NewPutOrUpdateKeyValueMessage("DiskType", "NVMe SSD").Serialize()
+		buffer, _ := proto.NewPutOrUpdateKeyValueMessage("DiskType", "NVMe SSD").Serialize()
 		_, _ = connection.Write(buffer)
 
-		buffer, _ = proto2.NewPutOrUpdateKeyValueMessage("Storage", "LSM").Serialize()
+		buffer, _ = proto.NewPutOrUpdateKeyValueMessage("Storage", "LSM").Serialize()
 		_, _ = connection.Write(buffer)
 
-		buffer, _ = proto2.NewPutOrUpdateKeyValueMessage("System", "Distributed").Serialize()
+		buffer, _ = proto.NewPutOrUpdateKeyValueMessage("System", "Distributed").Serialize()
 		_, _ = connection.Write(buffer)
 
-		buffer, _ = proto2.NewGetValueMessage("System").Serialize()
+		buffer, _ = proto.NewGetValueMessage("System").Serialize()
 		_, _ = connection.Write(buffer)
 	}
-	attemptLastRead := func() (*proto2.KeyValueMessage, error) {
+	attemptLastRead := func() (*proto.KeyValueMessage, error) {
 		connectionReader := conn.NewConnectionReader(connection)
 		_, _ = connectionReader.AttemptReadOrErrorOut()
 		_, _ = connectionReader.AttemptReadOrErrorOut()

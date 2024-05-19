@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/proto"
+	"non_blocking_busy_waiting/proto"
 	"syscall"
 )
 

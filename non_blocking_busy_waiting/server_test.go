@@ -3,10 +3,10 @@ package non_blocking_busy_waiting
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/conn"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/proto"
 	"math/rand"
 	"net"
+	"non_blocking_busy_waiting/conn"
+	"non_blocking_busy_waiting/proto"
 	"testing"
 )
 

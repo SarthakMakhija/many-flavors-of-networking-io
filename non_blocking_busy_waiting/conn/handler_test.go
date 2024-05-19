@@ -3,8 +3,8 @@ package conn
 import (
 	"bytes"
 	"github.com/stretchr/testify/assert"
-	"many-flavors-of-nwing-io/non_blocking_busy_waiting/proto"
-	store2 "many-flavors-of-nwing-io/non_blocking_busy_waiting/store"
+	"non_blocking_busy_waiting/proto"
+	store2 "non_blocking_busy_waiting/store"
 	"testing"
 )
 

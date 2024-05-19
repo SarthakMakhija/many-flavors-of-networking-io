@@ -1,8 +1,8 @@
 package conn
 
 import (
-	proto2 "many-flavors-of-nwing-io/multi_threaded_blocking_io/proto"
-	"many-flavors-of-nwing-io/multi_threaded_blocking_io/store"
+	"multi_threaded_blocking_io/proto"
+	"multi_threaded_blocking_io/store"
 	"net"
 )
 
@@ -19,8 +19,8 @@ func NewIncomingTCPConnection(
 	store *store.InMemoryStore,
 ) IncomingTCPConnection {
 	handlersByMessageType := map[uint32]Handler{
-		proto2.KeyValueMessageKindPutOrUpdate: NewPutOrUpdateHandler(store),
-		proto2.KeyValueMessageKindGet:         NewGetHandler(store),
+		proto.KeyValueMessageKindPutOrUpdate: NewPutOrUpdateHandler(store),
+		proto.KeyValueMessageKindGet:         NewGetHandler(store),
 	}
 	return IncomingTCPConnection{
 		connectionReader:      NewConnectionReader(connection),
@@ -41,9 +41,9 @@ func (incomingConnection IncomingTCPConnection) Handle() {
 				return
 			}
 			switch incomingMessage.Kind {
-			case proto2.KeyValueMessageKindPutOrUpdate:
+			case proto.KeyValueMessageKindPutOrUpdate:
 				incomingConnection.handlePutOrUpdate(incomingMessage)
-			case proto2.KeyValueMessageKindGet:
+			case proto.KeyValueMessageKindGet:
 				incomingConnection.handleGet(incomingMessage)
 			}
 		}
@@ -57,7 +57,7 @@ func (incomingConnection IncomingTCPConnection) Close() {
 }
 
 // handlePutOrUpdate handles PutOrUpdate.
-func (incomingConnection IncomingTCPConnection) handlePutOrUpdate(message *proto2.KeyValueMessage) {
+func (incomingConnection IncomingTCPConnection) handlePutOrUpdate(message *proto.KeyValueMessage) {
 	buffer, err := incomingConnection.handlersByMessageType[message.Kind].Handle(message)
 	if err == nil {
 		_, _ = incomingConnection.connectionReader.connection.Write(buffer)
@@ -65,7 +65,7 @@ func (incomingConnection IncomingTCPConnection) handlePutOrUpdate(message *proto
 }
 
 // handleGet handles Get.
-func (incomingConnection IncomingTCPConnection) handleGet(message *proto2.KeyValueMessage) {
+func (incomingConnection IncomingTCPConnection) handleGet(message *proto.KeyValueMessage) {
 	buffer, err := incomingConnection.handlersByMessageType[message.Kind].Handle(message)
 	if err == nil {
 		_, _ = incomingConnection.connectionReader.connection.Write(buffer)

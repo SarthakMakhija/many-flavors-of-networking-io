@@ -3,10 +3,10 @@ package single_threaded_blocking_io
 import (
 	"fmt"
 	"log"
-	"many-flavors-of-nwing-io/single_threaded_blocking_io/conn"
-	"many-flavors-of-nwing-io/single_threaded_blocking_io/store"
 	"net"
 	_ "net/http/pprof"
+	"single_threaded_blocking_io/conn"
+	"single_threaded_blocking_io/store"
 )
 
 // TCPServer represents a TCP TCPServer
