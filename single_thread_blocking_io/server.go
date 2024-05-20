@@ -32,11 +32,12 @@ func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 }
 
 // Start starts the server.
-// TCPServer implement "Single thread blocking IO" pattern.
+// TCPServer implements "Single thread blocking IO" pattern.
 // TCPServer:
 // - runs a continuous loop in a single goroutine (/main goroutine).
 // - a new instance of IncomingTCPConnection is created for every new connection.
 // - The incoming TCP connection is handled in the same main goroutine.
+// - This pattern involves blocking IO to read from the incoming connection.
 func (server *TCPServer) Start() {
 	for {
 		connection, err := server.listener.Accept()
