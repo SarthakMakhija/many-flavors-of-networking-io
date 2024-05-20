@@ -5,7 +5,7 @@
 This repository is a reference implementation for the article titled "Many flavors of networking IO". 
 It has the following implementations of TCP servers:
 
-1. **Single Thread Blocking IO**
+1. **Single-Threaded Blocking IO**
 
 `TCPServer` implements "Single thread blocking IO" pattern. The implementation of `TCPServer`:
 
@@ -14,7 +14,7 @@ It has the following implementations of TCP servers:
 - The incoming TCP connection is handled in the same main goroutine.
 - This pattern involves **blocking IO** to read from the incoming connection.
 
-2. **Multi Thread Blocking IO**
+2. **Multi-Threaded Blocking IO**
 
 `TCPServer` implements "Multi thread blocking IO" pattern. The implementation of `TCPServer`:
 
@@ -34,7 +34,7 @@ It has the following implementations of TCP servers:
 - a new client is created (for the incoming `connectionFd`) which handles the connection by performing **busy-wait or polling**.
 - all the IO operations are **non-blocking**.
 
-4. **Single Thread Event loop** (using `KQueue`)
+4. **Single-Threaded Event loop** (using `KQueue`)
 
 `TCPServer` implements "Single thread Non-Blocking with event loop" pattern. It starts an event loop which:
 
