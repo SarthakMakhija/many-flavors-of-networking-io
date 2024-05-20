@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-12
     steps:
     - uses: actions/checkout@v4
 
@@ -19,7 +19,7 @@ jobs:
         go-version: '1.22'
 
     - name: Build
-      run: go build -v ./single_thread_blocking_io && go build -v ./multi_thread_blocking_io && go build -v ./non_blocking_busy_waiting
+      run: go build -v ./single_thread_blocking_io && go build -v ./multi_thread_blocking_io && go build -v ./non_blocking_busy_waiting && go build -v ./single_thread_event_loop
 
     - name: Test
-      run: go test -v ./single_thread_blocking_io/... && go test -v ./multi_thread_blocking_io/... && go test -v ./non_blocking_busy_waiting/...
+      run: go test -v ./single_thread_blocking_io/... && go test -v ./multi_thread_blocking_io/... && go test -v ./non_blocking_busy_waiting/... && go test -v ./single_thread_event_loop/...
