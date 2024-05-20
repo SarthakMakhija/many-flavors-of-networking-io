@@ -3,6 +3,7 @@ package store
 import "sync"
 
 // InMemoryStore represents a store to hold Key/Value pairs in RAM.
+// It is a wrapper over golang's map.
 type InMemoryStore struct {
 	lock       sync.RWMutex
 	valueByKey map[string]string
