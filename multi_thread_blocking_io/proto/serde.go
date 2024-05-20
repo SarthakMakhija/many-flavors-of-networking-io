@@ -65,6 +65,8 @@ func NewGetValueUnsuccessfulResponseMessage(key string) *KeyValueMessage {
 }
 
 // Serialize serializes the KeyValueMessage in bytes.
+// KeyValueMessage is serialized in the following format:
+// 4 bytes to denote size -> message.serialize() -> FooterBytes
 func (message *KeyValueMessage) Serialize() ([]byte, error) {
 	payload, err := message.serialize()
 	if err != nil {
@@ -80,6 +82,7 @@ func (message *KeyValueMessage) Serialize() ([]byte, error) {
 }
 
 // DeserializeFrom deserializes the reader into KeyValueMessage.
+// Usually the incoming connection is passed as a reader.
 func DeserializeFrom(reader io.Reader) (*KeyValueMessage, error) {
 	headerBytes := make([]byte, ReservedHeaderLength)
 	_, err := reader.Read(headerBytes)
