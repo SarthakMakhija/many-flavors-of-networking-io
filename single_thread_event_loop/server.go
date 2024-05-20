@@ -22,11 +22,14 @@ type TCPServer struct {
 func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 	//starts the listener on the given port and returns the server file descriptor, if there is no error.
 	startListener := func() (int, error) {
+		// syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0) creates an IPv4 (AF_INET), bidirectional (SOCK_STREAM), TCP (0) socket.
 		serverFd, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0)
 		if err != nil {
 			_ = syscall.Close(serverFd)
 			return -1, err
 		}
+		// SetNonblock sets the server file descriptor non-blocking. This means the file descriptor can be polled.
+		// A non-blocking file descriptor does not block on IO operations and can be polled.
 		if err = syscall.SetNonblock(serverFd, true); err != nil {
 			_ = syscall.Close(serverFd)
 			return -1, err
@@ -75,6 +78,8 @@ func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 }
 
 // Start starts the server which in turn starts the event loop.
+// TCPServer implements "Single thread Non-Blocking with event loop" pattern.
+// Check eventLoop.Run() for more details.
 func (server *TCPServer) Start() {
 	server.eventLoop.Run()
 }

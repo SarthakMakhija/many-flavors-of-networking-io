@@ -40,7 +40,8 @@ func (kq *KQueue) Subscribe(event syscall.Kevent_t) error {
 }
 
 // Poll polls the Kernel KQueue for the specified duration using Kevent syscall.
-// The method blocks until at least one event is triggered or the timeout is reached.
+// The method "blocks" until at least one event is triggered or the timeout is reached.
+// This is the only blocking call in this module.
 func (kq *KQueue) Poll(timeout time.Duration) ([]syscall.Kevent_t, error) {
 	n, err := syscall.Kevent(kq.fd, nil, kq.kQEvents, toTimeSpec(timeout))
 	if err != nil {

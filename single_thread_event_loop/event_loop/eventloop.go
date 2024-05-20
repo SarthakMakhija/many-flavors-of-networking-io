@@ -17,6 +17,7 @@ type EventLoop struct {
 // NewEventLoop creates a new instance of EventLoop.
 // It also subscribes using the EVFILT_READ filter on the server file descriptor.
 func NewEventLoop(serverFd int, maxClients int, clientHandlers map[uint32]conn.Handler) (*EventLoop, error) {
+	// NewKQueue creates a new kernel KQueue data structure to hold various events on the subscribed file descriptor.
 	kQueue, err := NewKQueue(maxClients)
 	if err != nil {
 		return nil, err
@@ -28,6 +29,9 @@ func NewEventLoop(serverFd int, maxClients int, clientHandlers map[uint32]conn.H
 		clientHandlers: clientHandlers,
 		stopChannel:    make(chan struct{}),
 	}
+	// subscribes to the given server file descriptor using EVFILT_READ and EV_ADD flag.
+	// This means an event will be added to the kernel KQueue when the server file descriptor is ready to be read
+	// (/meaning there is an incoming connection on the server).
 	err = eventLoop.subscribeRead(serverFd)
 	if err != nil {
 		return nil, err
@@ -35,10 +39,11 @@ func NewEventLoop(serverFd int, maxClients int, clientHandlers map[uint32]conn.H
 	return eventLoop, nil
 }
 
-// Run runs an event loop in its own goroutine.
-// Polls the KQueue for events on the subscribed file descriptors.
-// If the polled event's file descriptor is same as the server's file descriptor: a new client is accepted,
-// Else: an existing client for the file descriptor is run.
+// Run runs an event loop. It:
+// - runs an event loop in its own goroutine.
+// - polls the KQueue for events on the subscribed file descriptors.
+// - if the polled event's file descriptor is same as the server's file descriptor: a new client is accepted,
+// - else: an existing client for the file descriptor is run.
 func (eventLoop *EventLoop) Run() {
 	// TODO: Handle client error
 	go func() {
@@ -90,12 +95,13 @@ func (eventLoop *EventLoop) subscribeRead(fd int) error {
 }
 
 // acceptClient accepts a new client (/socket).
-// syscall.Accept(..) will not block because the method is called when the file descriptor is ready.
+// syscall.Accept(..) will not block because the method is called when the non-blocking file descriptor is ready.
 func (eventLoop *EventLoop) acceptClient() error {
 	fd, _, err := syscall.Accept(eventLoop.serverFd)
 	if err != nil {
 		return err
 	}
+
 	eventLoop.clients[fd] = NewClient(fd, eventLoop.clientHandlers)
 	_ = syscall.SetNonblock(fd, true)
 

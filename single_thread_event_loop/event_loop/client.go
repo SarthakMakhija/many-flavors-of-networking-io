@@ -20,6 +20,7 @@ type Client struct {
 // NewClient creates a new instance of the client.
 // It reads the chunk from the file descriptor and maintains the current buffer.
 // currentBuffer denotes the chunk that is read currently.
+// The provided file descriptor is set to non-blocking by the caller.
 func NewClient(fd int, handlers map[uint32]conn.Handler) *Client {
 	return &Client{
 		fd:            fd,
@@ -56,7 +57,7 @@ func (client *Client) Stop() {
 }
 
 // read reads a single proto.KeyValueMessage from the file descriptor.
-// read will be triggered when the file descriptor is ready.
+// read will be triggered when the non-blocking file descriptor is ready.
 // This means syscall.Read(..) will not block.
 // read will continue reading till it finds the proto.FooterBytes.
 // However, it is possible that syscall.Read(..) does not return the amount of data that is requested.
