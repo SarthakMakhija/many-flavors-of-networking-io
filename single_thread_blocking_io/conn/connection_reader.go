@@ -28,6 +28,12 @@ func NewConnectionReader(connection net.Conn) ConnectionReader {
 }
 
 // AttemptReadOrErrorOut attempts to read from the incoming TCP connection.
+// It runs an infinite loop to read a single message from the incoming connection.
+//
+// proto.DeserializeFrom() reads from the connection using "blocking IO" and returns either a message or an error.
+// The method tolerates network timeout errors.
+//
+// This method also sets ReadDeadline for future Read calls and any currently-blocked Read call.
 func (connectionReader ConnectionReader) AttemptReadOrErrorOut() (*proto.KeyValueMessage, error) {
 	totalTimeoutsErrors := 0
 	for {

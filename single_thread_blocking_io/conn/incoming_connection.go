@@ -30,6 +30,9 @@ func NewIncomingTCPConnection(
 }
 
 // Handle handles the incoming connection.
+// It runs an infinite loop, trying to read from the connection.
+// The method AttemptReadOrErrorOut() of ConnectionReader reads from the connection and returns the incoming message or an error.
+// The method returns if there is any error (including io.EOF) in reading from the connection.
 func (incomingConnection IncomingTCPConnection) Handle() {
 	for {
 		select {

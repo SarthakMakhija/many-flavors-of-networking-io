@@ -1,6 +1,7 @@
 package store
 
 // InMemoryStore represents a store to hold Key/Value pairs in RAM.
+// It is a wrapper over golang's map.
 type InMemoryStore struct {
 	valueByKey map[string]string
 }

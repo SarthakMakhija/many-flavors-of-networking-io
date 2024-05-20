@@ -22,8 +22,11 @@ func NewPutOrUpdateHandler(store *store.InMemoryStore) Handler {
 	}
 }
 
+// Handle handles the incoming message.
+// It considers that the message is a proto.KeyValueMessageKindPutOrUpdate.
 func (handler PutOrUpdateHandler) Handle(message *proto.KeyValueMessage) ([]byte, error) {
 	handler.store.PutOrUpdate(message.Key, message.Value)
+
 	return proto.NewPutOrUpdateKeyValueSuccessfulResponseMessage().Serialize()
 }
 
@@ -39,6 +42,8 @@ func NewGetHandler(store *store.InMemoryStore) Handler {
 	}
 }
 
+// Handle handles the incoming message.
+// It considers that the message is a proto.KeyValueMessageKindGet.
 func (handler GetHandler) Handle(message *proto.KeyValueMessage) ([]byte, error) {
 	value, ok := handler.store.GetValue(message.Key)
 	var buffer []byte
