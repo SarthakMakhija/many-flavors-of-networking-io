@@ -14,7 +14,6 @@ It has the following implementations of TCP servers:
 - The incoming TCP connection is handled in the same main goroutine.
 - This pattern involves **blocking IO** to read from the incoming connection.
 
-
 2. **Multi Thread Blocking IO**
 
 `TCPServer` implements "Multi thread blocking IO" pattern. The implementation of `TCPServer`:
