@@ -1,4 +1,4 @@
-package single_thread_event_loop
+package event_loop
 
 import (
 	"bytes"

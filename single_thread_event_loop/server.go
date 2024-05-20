@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"single_thread_eventloop/conn"
+	"single_thread_eventloop/event_loop"
 	"single_thread_eventloop/proto"
 	"single_thread_eventloop/store"
 	"syscall"
@@ -14,7 +15,7 @@ const MaxClients = 10_000
 // TCPServer represents an async TCP TCPServer
 type TCPServer struct {
 	serverFd  int
-	eventLoop *EventLoop
+	eventLoop *event_loop.EventLoop
 }
 
 // NewTCPServer creates a new instance of TCPServer.
@@ -45,8 +46,8 @@ func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 		return serverFd, nil
 	}
 	//createEventLoop creates an instance of Event loop.
-	createEventLoop := func(serverFd int, store *store.InMemoryStore) (*EventLoop, error) {
-		eventLoop, err := NewEventLoop(serverFd, MaxClients, map[uint32]conn.Handler{
+	createEventLoop := func(serverFd int, store *store.InMemoryStore) (*event_loop.EventLoop, error) {
+		eventLoop, err := event_loop.NewEventLoop(serverFd, MaxClients, map[uint32]conn.Handler{
 			proto.KeyValueMessageKindPutOrUpdate: conn.NewPutOrUpdateHandler(store),
 			proto.KeyValueMessageKindGet:         conn.NewGetHandler(store),
 		})
