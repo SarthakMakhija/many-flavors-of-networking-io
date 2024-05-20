@@ -3,6 +3,6 @@ go 1.22.3
 use (
 	./single_thread_blocking_io
 	./multi_thread_blocking_io
-	non_blocking_busy_waiting
+	./non_blocking_busy_waiting
 	./single_thread_event_loop
 )
