@@ -35,7 +35,6 @@ func (client *Client) Run() {
 	for {
 		select {
 		case <-client.stopChannel:
-			println("client stop")
 			return
 		default:
 			keyValueMessage, err := client.read()
