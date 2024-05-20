@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-// Client handles an incoming connection.
+// Client handles an incoming connection (/socket).
 type Client struct {
 	fd            int
 	handlers      map[uint32]Handler
@@ -18,8 +18,9 @@ type Client struct {
 }
 
 // NewClient creates a new instance of the client.
-// It reads the chunk from the file descriptor and maintains the current buffer.
+// It reads chunks from the file descriptor and maintains the current buffer.
 // currentBuffer denotes the chunk that is read currently.
+// The provided file descriptor is set to non-blocking by the caller.
 func NewClient(fd int, handlers map[uint32]Handler) *Client {
 	return &Client{
 		fd:            fd,
@@ -58,13 +59,14 @@ func (client *Client) Stop() {
 }
 
 // read reads a single proto.KeyValueMessage from the file descriptor.
-// read will be triggered when the file descriptor is ready.
-// This means syscall.Read(..) will not block.
+// The file descriptor is already set to non-blocking, which means syscall.Read(..) will not block.
+// However, if there is nothing to be read from the file descriptor, an error would be returned.
+// The error would be EAGAIN or EWOULDBLOCK.
+// For any error, other than EAGAIN or EWOULDBLOCK, the read method will return.
 // read will continue reading till it finds the proto.FooterBytes.
 // However, it is possible that syscall.Read(..) does not return the amount of data that is requested.
-// In that case, the received data will be stored in client.currentBuffer and the read method will return.
-// When the read method is invoked again, at a later point in time when the file descriptor is ready,
-// it will read further data until proto.FooterBytes are found.
+// In that case, the received data will be stored in client.currentBuffer and the read method will perform poll again.
+// When it polls again, it will read further data until proto.FooterBytes are found.
 // The combined data represented by the currentBuffer will be deserialized into proto.KeyValueMessage.
 func (client *Client) read() (*proto.KeyValueMessage, error) {
 	for {

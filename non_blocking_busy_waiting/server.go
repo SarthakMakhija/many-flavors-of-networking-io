@@ -12,7 +12,7 @@ import (
 
 const MaxClients = 10_000
 
-// TCPServer represents an async TCP TCPServer
+// TCPServer represents a non-blocking busy-waiting TCP TCPServer
 type TCPServer struct {
 	serverFd    int
 	handlers    map[uint32]conn.Handler
@@ -23,11 +23,14 @@ type TCPServer struct {
 func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 	//starts the listener on the given port and returns the server file descriptor, if there is no error.
 	startListener := func() (int, error) {
+		// syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0) creates an IPv4 (AF_INET), bidirectional (SOCK_STREAM), TCP (0) socket.
 		serverFd, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0)
 		if err != nil {
 			_ = syscall.Close(serverFd)
 			return -1, err
 		}
+		// SetNonblock sets the server file descriptor non-blocking. This means the file descriptor can be polled.
+		// A non-blocking file descriptor does not block on IO operations and can be polled.
 		if err = syscall.SetNonblock(serverFd, true); err != nil {
 			_ = syscall.Close(serverFd)
 			return -1, err
@@ -63,6 +66,15 @@ func NewTCPServer(host string, port uint16) (*TCPServer, error) {
 }
 
 // Start starts the server.
+// TCPServer implements "Non-Blocking with Busy-Wait" pattern.
+// TCPServer:
+// - runs a continuous loop in a single goroutine (/main goroutine).
+// - serverFd is already marked non-blocking, this means any IO operations on this file descriptor will not block. However, the file descriptor can be polled.
+// - an incoming connection is represented by its file descriptor "connectionFd".
+// - connectionFd is also marked non-blocking.
+// - a new client is created (for the incoming connectionFd) which handles the connection.
+// - all the IO operations are non-blocking.
+// This server handles only one client at a time.
 func (server *TCPServer) Start() {
 	for {
 		select {
