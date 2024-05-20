@@ -1,6 +1,6 @@
 ### Many flavors of networking IO
 
-[![build](https:github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml/badge.svg)](https:github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml)
+[![build](https://github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml/badge.svg)](https://github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml)
 
 This repository is a reference implementation for the article titled "Many flavors of networking IO". 
 It has the following implementations of TCP servers:
