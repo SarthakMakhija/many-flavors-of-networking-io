@@ -33,7 +33,7 @@ It has the following implementations of TCP servers:
 - an incoming connection is represented by its own file descriptor: `connectionFd`.
 - `connectionFd` is also marked non-blocking.
 - a new client is created (for the incoming `connectionFd`) which handles the connection by performing **busy-wait or polling**.
-- all the IO operations are **non-blocking** .
+- all the IO operations are **non-blocking**.
 
 4. **Single Thread Event loop** (using `KQueue`)
 
@@ -43,6 +43,6 @@ It has the following implementations of TCP servers:
 - polls the `KQueue` for events on the subscribed file descriptors.
 - if the polled event's file descriptor is same as the server's file descriptor: a new client is accepted,
 - else: an existing client for the file descriptor is run.
-- all the IO operations are **non-blocking** .
+- all the IO operations are **non-blocking**, (the only place where blocking happens is in polling `Kqueue`).
 
 *The article is yet to be written.
