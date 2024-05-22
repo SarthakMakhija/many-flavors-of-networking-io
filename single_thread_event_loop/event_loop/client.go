@@ -31,7 +31,7 @@ func NewClient(fd int, handlers map[uint32]conn.Handler) *Client {
 	}
 }
 
-// Run runs the client in a separate goroutine.
+// Run runs the client.
 // It is invoked when the client's file descriptor is ready to be read.
 func (client *Client) Run() {
 	for {
