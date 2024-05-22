@@ -2,7 +2,7 @@
 
 [![build](https://github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml/badge.svg)](https://github.com/SarthakMakhija/many-flavors-of-networking-io/actions/workflows/build.yml)
 
-This repository is a reference implementation for the article titled "Many flavors of networking IO". 
+This repository is a reference implementation for the article titled "Many flavors of Networking IO". 
 It has the following implementations of TCP servers:
 
 1. **Single-Threaded Blocking IO**
