@@ -44,4 +44,4 @@ It has the following implementations of TCP servers:
 - else: an existing client for the file descriptor is run.
 - all the IO operations are **non-blocking**, (the only place where blocking happens is in polling `Kqueue`).
 
-*The article is yet to be written.
+The article is available [here](https://tech-lessons.in/en/blog/many_flavors_of_networking_io/).
